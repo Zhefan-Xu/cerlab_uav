@@ -1,0 +1,10 @@
+ <launch>
+  	<node pkg="tf" type="static_transform_publisher" name="map_odom"
+        	args="0 0 0 0 0 0 map odom 1000"/>
+
+     <node pkg="tf" type="static_transform_publisher" name="odom_cameraOdom"
+    	args="0 0 0 0 0 0 odom camera_odom_frame 1000"/>
+
+   	 <node pkg="tf" type="static_transform_publisher" name="cameraPose_baseLink"
+    	args="0 0 0 0 0 0 camera_pose_frame base_link 1000"/>
+ </launch>

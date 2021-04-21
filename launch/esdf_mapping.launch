@@ -1,0 +1,15 @@
+<launch>
+    <node name="esdf_node" pkg="voxblox_ros" type="esdf_server" output="screen" args="-alsologtostderr" clear_params="true">
+      <remap from="pointcloud" to="/d400/depth/color/points"/>
+      <remap from="esdf_node/esdf_map_out" to="esdf_map" />
+      <param name="tsdf_voxel_size" value="0.2" />
+      <param name="tsdf_voxels_per_side" value="16" />
+      <param name="publish_esdf_map" value="true" />
+      <param name="publish_pointclouds" value="true" />
+      <param name="use_tf_transforms" value="true" />
+      <param name="update_mesh_every_n_sec" value="1.0" />
+      <param name="clear_sphere_for_planning" value="true" />
+      <param name="world_frame" value="t265_odom_frame" />
+      <param name="sensor_frame" value="t265_link"/>
+    </node>
+</launch>
