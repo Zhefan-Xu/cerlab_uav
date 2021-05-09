@@ -10,6 +10,8 @@
 #include <mavros_msgs/SetMode.h>
 #include <mavros_msgs/State.h>
 
+using std::cout; using std::endl;
+
 mavros_msgs::State current_state;
 void state_cb(const mavros_msgs::State::ConstPtr& msg){
     current_state = *msg;
@@ -38,13 +40,17 @@ int main(int argc, char **argv)
         rate.sleep();
     }
 
+    cout << "Connection OK!" << endl;
+
     geometry_msgs::PoseStamped pose;
+    pose.header.frame_id = "map";
     pose.pose.position.x = 0;
     pose.pose.position.y = 0;
-    pose.pose.position.z = 0.1;
+    pose.pose.position.z = 0.3;
 
     //send a few setpoints before starting
     for(int i = 100; ros::ok() && i > 0; --i){
+        pose.header.stamp = ros::Time::now();
         local_pos_pub.publish(pose);
         ros::spinOnce();
         rate.sleep();
@@ -76,9 +82,9 @@ int main(int argc, char **argv)
                 last_request = ros::Time::now();
             }
         }
-
+        pose.header.stamp = ros::Time::now();
         local_pos_pub.publish(pose);
-
+        // cout << "here" << endl;
         ros::spinOnce();
         rate.sleep();
     }
