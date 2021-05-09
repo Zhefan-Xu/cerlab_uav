@@ -24,8 +24,10 @@ int main(int argc, char **argv)
 
     ros::Subscriber state_sub = nh.subscribe<mavros_msgs::State>
             ("mavros/state", 10, state_cb);
+    // ros::Publisher local_pos_pub = nh.advertise<geometry_msgs::PoseStamped>
+    //         ("mavros/setpoint_position/local", 10);
     ros::Publisher local_pos_pub = nh.advertise<geometry_msgs::PoseStamped>
-            ("mavros/setpoint_position/local", 10);
+            ("target", 10);
     ros::ServiceClient arming_client = nh.serviceClient<mavros_msgs::CommandBool>
             ("mavros/cmd/arming");
     ros::ServiceClient set_mode_client = nh.serviceClient<mavros_msgs::SetMode>
@@ -35,10 +37,10 @@ int main(int argc, char **argv)
     ros::Rate rate(20.0);
 
     // wait for FCU connection
-    while(ros::ok() && !current_state.connected){
-        ros::spinOnce();
-        rate.sleep();
-    }
+    // while(ros::ok() && !current_state.connected){
+    //     ros::spinOnce();
+    //     rate.sleep();
+    // }
 
     cout << "Connection OK!" << endl;
 
