@@ -24,10 +24,10 @@ int main(int argc, char **argv)
 
     ros::Subscriber state_sub = nh.subscribe<mavros_msgs::State>
             ("mavros/state", 10, state_cb);
-    // ros::Publisher local_pos_pub = nh.advertise<geometry_msgs::PoseStamped>
-    //         ("mavros/setpoint_position/local", 10);
     ros::Publisher local_pos_pub = nh.advertise<geometry_msgs::PoseStamped>
-            ("target", 10);
+            ("mavros/setpoint_position/local", 10);
+    // ros::Publisher local_pos_pub = nh.advertise<geometry_msgs::PoseStamped>
+    //         ("/target", 10);
     ros::ServiceClient arming_client = nh.serviceClient<mavros_msgs::CommandBool>
             ("mavros/cmd/arming");
     ros::ServiceClient set_mode_client = nh.serviceClient<mavros_msgs::SetMode>
@@ -37,10 +37,10 @@ int main(int argc, char **argv)
     ros::Rate rate(20.0);
 
     // wait for FCU connection
-    // while(ros::ok() && !current_state.connected){
-    //     ros::spinOnce();
-    //     rate.sleep();
-    // }
+    while(ros::ok() && !current_state.connected){
+        ros::spinOnce();
+        rate.sleep();
+    }
 
     cout << "Connection OK!" << endl;
 
@@ -48,7 +48,7 @@ int main(int argc, char **argv)
     pose.header.frame_id = "map";
     pose.pose.position.x = 0;
     pose.pose.position.y = 0;
-    pose.pose.position.z = 0.3;
+    pose.pose.position.z = 0.5;
 
     //send a few setpoints before starting
     for(int i = 100; ros::ok() && i > 0; --i){
