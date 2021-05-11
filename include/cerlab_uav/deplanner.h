@@ -1,10 +1,10 @@
 #ifndef DEPLANNER_H
 #define DEPLANNER_H
 #include <ros/ros.h>
-#include <cerlab_uav/prm.h>
-#include <nav_msgs/Odometry.h>
 #include <octomap_msgs/Octomap.h>
 #include <octomap_msgs/conversions.h>
+#include <cerlab_uav/prm.h>
+#include <nav_msgs/Odometry.h>
 
 
 using std::cout; using std::endl;
@@ -15,8 +15,10 @@ private:
 	ros::Subscriber odom_sub;
 	ros::Subscriber octomap_sub;
 	Node current_node; // used as current position for planning
+	AbstractOcTree* abtree;
 	OcTree* tree_ptr; // current map for planning
-
+	bool odom_received;
+	bool octomap_received;
 
 public:
 	deplanner(ros::NodeHandle _nh);
