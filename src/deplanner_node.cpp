@@ -4,6 +4,6 @@
 int main(int argc, char **argv){
 	ros::init(argc, argv, "planner_node");
 	ros::NodeHandle nh;
-	deplanner p = deplanner(nh);
+	deplanner p(nh);
 	return 0;
 }
