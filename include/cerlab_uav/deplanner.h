@@ -4,6 +4,7 @@
 #include <octomap_msgs/Octomap.h>
 #include <octomap_msgs/conversions.h>
 #include <cerlab_uav/prm.h>
+#include <cerlab_uav/multi_astar.h>
 #include <nav_msgs/Odometry.h>
 #include <geometry_msgs/PoseStamped.h>
 #include <mavros_msgs/CommandBool.h>
@@ -27,6 +28,8 @@ private:
 	Node current_node; // used as current position for planning
 	AbstractOcTree* abtree;
 	OcTree* tree_ptr; // current map for planning
+	PRM* roadmap;
+	std::vector<Node*> path;
 	mavros_msgs::State current_state;
 	bool odom_received;
 	bool octomap_received;
@@ -49,9 +52,16 @@ public:
 	void planning();
 	void publishGoal();
 	bool isReach();
-
-
-
+	std::vector<Node*> getGoalCandidates(PRM* roadmap);
+	Node* findStartNode(PRM* map, Node* current_node, OcTree& tree);
+	std::vector<Node*> findBestPath(PRM* roadmap,
+                                Node* start,
+                                std::vector<Node*> goal_candidates,
+                                OcTree& tree,
+                                bool replan);
+	double calculatePathLength(std::vector<Node*> path);
+	double interpolateNumVoxels(Node* n, double yaw);
+	double calculatePathRotation(std::vector<Node*> path, double current_yaw);
 
 };
 

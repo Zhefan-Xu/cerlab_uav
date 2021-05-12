@@ -482,7 +482,6 @@ PRM* buildRoadMap(OcTree &tree,
 	}
 	cout << "newly added: " << count_sample << " samples" << endl;
 
-
 	// ========================Connect and Evaluate for new===================================================
 	// Check neighbor and add edges
 	for (Node* n: new_nodes){
@@ -510,7 +509,6 @@ PRM* buildRoadMap(OcTree &tree,
 		}
 
 	}
-
 	// ==========================Update Old node===============================================================
 	// Set cost and heuristics to inf
 	int count_update_node = 0;
@@ -650,7 +648,6 @@ PRM* buildRoadMap(OcTree &tree,
 		// cout << "NODE VIS ARRAY SIZE: "<< node_vis_array.size() << endl;
 		map_vis_array.push_back(node_vis_marker);
 	}
-
 	return map;
 }
 
