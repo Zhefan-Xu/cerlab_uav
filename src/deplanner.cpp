@@ -8,7 +8,6 @@ deplanner::deplanner(const ros::NodeHandle& _nh):nh(_nh){
 	odom_received = false;
 	octomap_received = false;
 	state_received = false;
-	takeoff = false;
 	odom_sub = nh.subscribe("/mavros/local_position/odom", 10, &deplanner::odom_cb, this);
 	octomap_sub = nh.subscribe("/octomap_binary", 10, &deplanner::octomap_cb, this);
 	state_sub = nh.subscribe<mavros_msgs::State>
@@ -32,6 +31,7 @@ deplanner::deplanner(const ros::NodeHandle& _nh):nh(_nh){
 	goal_pose.pose.position.x = current_node.p.x();
 	goal_pose.pose.position.y = current_node.p.y();
 	goal_pose.pose.position.z = current_node.p.z();
+	goal_pose.pose.orientation = quaternion_from_rpy(0, 0, current_node.yaw);
 
 	status_mutex_.reset(new std::mutex);
     worker_ = std::thread(&deplanner::publishGoal, this);
@@ -39,6 +39,7 @@ deplanner::deplanner(const ros::NodeHandle& _nh):nh(_nh){
 
 }
 
+deplanner::~deplanner(){}
 
 void deplanner::odom_cb(const nav_msgs::OdometryConstPtr& odom){
 	double x = odom->pose.pose.position.x;
@@ -48,9 +49,9 @@ void deplanner::odom_cb(const nav_msgs::OdometryConstPtr& odom){
 	current_node.p.y() = y;
 	current_node.p.z() = z;
 	geometry_msgs::Quaternion quat = odom->pose.pose.orientation;
-	tf2::Quaternion tf_quat;
-	double current_roll, current_pitch, current_yaw;
-	tf2::Matrix3x3(tf_quat).getRPY(current_roll, current_pitch, current_yaw);
+	double current_yaw = rpy_from_quaternion(quat);
+	current_node.yaw = current_yaw;
+
 	if (not odom_received){
 		odom_received = true;
 		ROS_INFO("Odom Received!");	
@@ -77,13 +78,33 @@ void deplanner::state_cb(const mavros_msgs::State::ConstPtr& mavros_state){
 }
 
 void deplanner::planning(){
-
+	bool new_plan = true;
+	bool takeoff = false;
+	bool scan_around = false;
+	int scan_count = 0;
 	while (ros::ok()){
 		// ROS_INFO("planning");
-		if (not takeoff){
-			goal_pose.pose.position.z = goal_pose.pose.position.z + 0.5;
-			takeoff = true;
-			ROS_INFO("Set Takeoff attitude: 0.5m.");
+		if (new_plan){
+			ROS_INFO("NEW PLAN");
+			new_plan = false;
+			if (not takeoff){
+				goal_pose.pose.position.z = goal_pose.pose.position.z + 0.5;
+				takeoff = true;
+				ROS_INFO("Set Takeoff attitude: 0.5m.");
+			}
+			// Initial Scan
+			else if(takeoff and not scan_around){
+				// Rotate three times for 120 degrees
+				goal_pose.pose.orientation = quaternion_from_rpy(0, 0, current_node.yaw+PI_const*2/10);
+				++scan_count;
+				if (scan_count == 11){
+					scan_around = true;
+				} 
+			}
+
+		}
+		if (new_plan == false){
+			new_plan = isReach();
 		}
 		ros::spinOnce();
 
@@ -130,4 +151,25 @@ void deplanner::publishGoal(){
 	}
 }
 
-deplanner::~deplanner(){}
+bool deplanner::isReach(){
+	double goal_x = goal_pose.pose.position.x;
+	double goal_y = goal_pose.pose.position.y;
+	double goal_z = goal_pose.pose.position.z;
+	double dx = std::abs(current_node.p.x() - goal_x);
+	double dy = std::abs(current_node.p.y() - goal_y);
+	double dz = std::abs(current_node.p.z() - goal_z);
+
+	geometry_msgs::Quaternion quat = goal_pose.pose.orientation;
+	double goal_yaw = rpy_from_quaternion(quat);
+
+
+	double dyaw = std::abs(goal_yaw - current_node.yaw);
+	// cout << goal_yaw << " " << current_node.yaw << endl;
+	// cout << dx << " " << dy << " " << " " << dz << " "<< dyaw << endl; 
+	if (dx < 0.15 and dy < 0.15 and dz < 0.15 and dyaw < 0.1){
+		return true;
+	}
+	else{
+		return false;
+	}
+}

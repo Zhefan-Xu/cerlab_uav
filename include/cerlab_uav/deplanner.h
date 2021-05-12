@@ -31,7 +31,6 @@ private:
 	bool odom_received;
 	bool octomap_received;
 	bool state_received;
-	bool takeoff;
 	geometry_msgs::PoseStamped goal_pose;
 
 
@@ -49,6 +48,7 @@ public:
 	void state_cb(const mavros_msgs::State::ConstPtr& mavros_state);
 	void planning();
 	void publishGoal();
+	bool isReach();
 
 
 
