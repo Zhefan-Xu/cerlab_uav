@@ -55,8 +55,8 @@
     <node pkg="tf" type="static_transform_publisher" name="map_odom"
             args="0 0 0 0 0 0 map odom 1000"/>
 
-    <node pkg="tf" type="static_transform_publisher" name="cameraLink_odom"
-            args="0 0 0 0 0 0 odom base_link 1000"/>
+
+    <node pkg="cerlab_uav" type="transform_broadcast" name="transform_broadcast"/>
 
     <node pkg="tf" type="static_transform_publisher" name="cameraLink_baseLink"
             args="0 0 0 -1.57 0 -1.57 base_link camera_link 1000"/>

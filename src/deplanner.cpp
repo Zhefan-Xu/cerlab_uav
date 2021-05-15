@@ -107,14 +107,14 @@ void deplanner::planning(){
 			// Initial Scan
 			else if(takeoff and not scan_around){
 				// Rotate three times for 120 degrees
-				// if (scan_count < 9){
-				// 	goal_pose.pose.orientation = quaternion_from_rpy(0, 0, current_node.yaw+PI_const*2/10);
-				// }
+				if (scan_count < 9){
+					goal_pose.pose.orientation = quaternion_from_rpy(0, 0, current_node.yaw+PI_const*2/10);
+				}
 				// else{
-				goal_pose.pose.position.x = goal_pose.pose.position.x + 0.3;
+				// goal_pose.pose.position.x = goal_pose.pose.position.x + 0.3;
 				// }
 				++scan_count;
-				if (scan_count == 1){
+				if (scan_count == 10){
 					scan_around = true;
 				} 
 			}
