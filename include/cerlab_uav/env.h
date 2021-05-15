@@ -72,8 +72,8 @@ double env_z_max = 2.5;
 
 
 // Define Drone Size:
-double DRONE_X = 0.1;
-double DRONE_Y = 0.1;
+double DRONE_X = 0.2;
+double DRONE_Y = 0.2;
 double DRONE_Z = 0.1;
 
 

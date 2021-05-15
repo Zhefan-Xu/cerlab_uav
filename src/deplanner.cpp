@@ -134,8 +134,10 @@ void deplanner::planning(){
 					}
 					std::vector<Node*> goal_candidates = getGoalCandidates(roadmap);
 					path = findBestPath(roadmap, start, goal_candidates, *tree_ptr, replan);
+					last_goal = *(path.end() - 1);
 					new_path = false;
-					++path_idx;
+					// ++path_idx;
+					path_idx = 0;
 					delete abtree;
 				}
 
@@ -224,7 +226,7 @@ bool deplanner::isReach(){
 	double dyaw = std::abs(goal_yaw - current_node.yaw);
 	// cout << goal_yaw << " " << current_node.yaw << endl;
 	// cout << dx << " " << dy << " " << " " << dz << " "<< dyaw << endl; 
-	if (dx < 0.05 and dy < 0.05 and dz < 0.05 and dyaw < 0.1){
+	if (dx < 0.1 and dy < 0.1 and dz < 0.1 and dyaw < 0.1){
 		return true;
 	}
 	else{
