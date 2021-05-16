@@ -10,6 +10,11 @@ deplanner::deplanner(const ros::NodeHandle& _nh):nh(_nh){
 	odom_received = false;
 	octomap_received = false;
 	state_received = false;
+	map_ready = false;
+	new_path = false;
+	new_plan = true;
+
+
 	odom_sub = nh.subscribe("/mavros/local_position/odom", 10, &deplanner::odom_cb, this);
 	octomap_sub = nh.subscribe("/octomap_binary", 10, &deplanner::octomap_cb, this);
 	state_sub = nh.subscribe<mavros_msgs::State>
@@ -35,7 +40,7 @@ deplanner::deplanner(const ros::NodeHandle& _nh):nh(_nh){
 	goal_pose.pose.position.z = current_node.p.z();
 	goal_pose.pose.orientation = quaternion_from_rpy(0, 0, current_node.yaw);
 
-	// status_mutex_.reset(new std::mutex);
+	goal_mutex_.reset(new std::mutex);
     worker_ = std::thread(&deplanner::publishGoal, this);
     this->planning();
 
@@ -61,10 +66,18 @@ void deplanner::odom_cb(const nav_msgs::OdometryConstPtr& odom){
 }
 
 void deplanner::octomap_cb(const octomap_msgs::Octomap::ConstPtr& bmap){
-	abtree = octomap_msgs::binaryMsgToMap(*bmap);
-	tree_ptr = dynamic_cast<OcTree*>(abtree);
-	tree_ptr->setResolution(RES);
-	// delete abtree;
+	if (new_path and new_plan){
+		AbstractOcTree* abtree = octomap_msgs::binaryMsgToMap(*bmap);
+		tree_ptr = dynamic_cast<OcTree*>(abtree);
+		tree_ptr->setResolution(RES);
+		map_ready = true;
+		// while (ros::ok() and new_path){
+		// 	// ROS_INFO("Wait for planning");
+		// 	rate.sleep();
+		// }
+		// delete abtree;
+		// map_ready = false;
+	}
 	if (not octomap_received){
 		octomap_received = true;
 		ROS_INFO("Octomap Received!");
@@ -80,8 +93,6 @@ void deplanner::state_cb(const mavros_msgs::State::ConstPtr& mavros_state){
 }
 
 void deplanner::planning(){
-	bool new_plan = true;
-	bool new_path = true;
 	bool takeoff = false;
 	bool scan_around = false;
 	int scan_count = 0;
@@ -92,13 +103,15 @@ void deplanner::planning(){
 	Node* last_goal;
 	std::vector<visualization_msgs::Marker> map_vis_array;
 	bool rotate = true;
+	ros::Rate rate(10.0);
+
+
 
 
 	while (ros::ok()){
 		// ROS_INFO("planning");
 		if (new_plan){
 			// ROS_INFO("NEW PLAN");
-			new_plan = false;
 			if (not takeoff){
 				goal_pose.pose.position.z = goal_pose.pose.position.z + 1.5;
 				takeoff = true;
@@ -116,10 +129,15 @@ void deplanner::planning(){
 				++scan_count;
 				if (scan_count == 10){
 					scan_around = true;
+					new_path = true;
 				} 
 			}
 			else{
 				if (new_path){
+					while (ros::ok() and not map_ready){
+						// ROS_INFO("wait for map");
+						rate.sleep();
+					}
 					Node* start;
 					if (first_time){
 						roadmap = new PRM ();
@@ -130,16 +148,16 @@ void deplanner::planning(){
 					else{
 						start = last_goal;
 						roadmap = buildRoadMap(*tree_ptr, roadmap, path,  start, map_vis_array);
-
 					}
 					std::vector<Node*> goal_candidates = getGoalCandidates(roadmap);
 					path = findBestPath(roadmap, start, goal_candidates, *tree_ptr, replan);
 					last_goal = *(path.end() - 1);
 					new_path = false;
+					map_ready = false;
 					// ++path_idx;
 					path_idx = 0;
-					delete abtree;
 				}
+				
 
 				next_goal_target = path[path_idx];
 				// Generate Goal for Publishing
@@ -159,20 +177,21 @@ void deplanner::planning(){
 					new_path = true;
 				} 
 			}
-
+			new_plan = false;
 		}
 
 
 		if (new_plan == false){
 			new_plan = isReach();
 		}
+		// cout << "new plan: " << new_plan << "new path: " << new_path << endl;
+		// rate.sleep();
 		ros::spinOnce();
-
 	}
 }
 
 void deplanner::publishGoal(){
-	ros::Rate rate(20.0);
+	ros::Rate rate(10.0);
 	for(int i = 100; ros::ok() && i > 0; --i){
         goal_pose.header.stamp = ros::Time::now();
         goal_pub.publish(goal_pose);
@@ -204,6 +223,8 @@ void deplanner::publishGoal(){
                 last_request = ros::Time::now();
             }
         }
+        std::lock_guard<std::mutex> goal_guard(*(goal_mutex_));
+
 		goal_pose.header.stamp = ros::Time::now();
 		goal_pub.publish(goal_pose);
 		ros::spinOnce();

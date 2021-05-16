@@ -26,7 +26,7 @@ private:
 	ros::ServiceClient arming_client;
 	ros::ServiceClient set_mode_client;
 	Node current_node; // used as current position for planning
-	AbstractOcTree* abtree;
+	// AbstractOcTree* abtree;
 	OcTree* tree_ptr; // current map for planning
 	PRM* roadmap;
 	std::vector<Node*> path;
@@ -36,9 +36,13 @@ private:
 	bool state_received;
 	geometry_msgs::PoseStamped goal_pose;
 
+	bool map_ready;
+	bool new_path;
+	bool new_plan;
 
 
-	std::unique_ptr<std::mutex> status_mutex_;
+
+	std::unique_ptr<std::mutex> goal_mutex_;
 
 
 public:
