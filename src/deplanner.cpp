@@ -113,9 +113,9 @@ void deplanner::planning(){
 		if (new_plan){
 			// ROS_INFO("NEW PLAN");
 			if (not takeoff){
-				goal_pose.pose.position.z = goal_pose.pose.position.z + 1.5;
+				goal_pose.pose.position.z = goal_pose.pose.position.z + 0.8;
 				takeoff = true;
-				ROS_INFO("Set Takeoff attitude: 1.5m.");
+				ROS_INFO("Set Takeoff attitude: 0.8m.");
 			}
 			// Initial Scan
 			else if(takeoff and not scan_around){

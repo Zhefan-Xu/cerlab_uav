@@ -70,12 +70,19 @@ double RES = 0.2;
 // double env_z_min = 0.2;
 // double env_z_max = 2.5;
 
-double env_x_min = -100;
-double env_x_max = 100;
-double env_y_min = -100;
-double env_y_max = 100;
+// double env_x_min = -100;
+// double env_x_max = 100;
+// double env_y_min = -100;
+// double env_y_max = 100;
+// double env_z_min = 0.2;
+// double env_z_max = 2.5;
+
+double env_x_min = -2;
+double env_x_max = 2;
+double env_y_min = -2;
+double env_y_max = 2;
 double env_z_min = 0.2;
-double env_z_max = 2.5;
+double env_z_max = 1;
 
 // Define Drone Size:
 double DRONE_X = 0.3;
