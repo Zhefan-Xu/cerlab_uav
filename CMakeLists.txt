@@ -139,6 +139,8 @@ add_library(deplanner src/deplanner.cpp)
 add_executable(offboard_node src/offb_node.cpp)
 add_executable(deplanner_node src/deplanner_node.cpp)
 add_executable(transform_broadcast src/tfbc.cpp)
+add_executable(publish_goal src/publish_goal_node.cpp)
+
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -158,6 +160,8 @@ target_link_libraries(offboard_node ${catkin_LIBRARIES})
 target_link_libraries(deplanner ${catkin_LIBRARIES})
 target_link_libraries(deplanner_node ${catkin_LIBRARIES} deplanner)
 target_link_libraries(transform_broadcast ${catkin_LIBRARIES})
+target_link_libraries(publish_goal ${catkin_LIBRARIES})
+
 
 
 #############

@@ -20,8 +20,13 @@ deplanner::deplanner(const ros::NodeHandle& _nh):nh(_nh){
 	state_sub = nh.subscribe<mavros_msgs::State>
             ("mavros/state", 10, &deplanner::state_cb, this);
 
-	goal_pub = nh.advertise<geometry_msgs::PoseStamped>
-            ("mavros/setpoint_position/local", 10);
+	// goal_pub = nh.advertise<geometry_msgs::PoseStamped>
+ //            ("mavros/setpoint_position/local", 10);
+    
+    goal_pub = nh.advertise<geometry_msgs::PoseStamped>
+            ("cerlab_uav/goal", 10);
+
+
     arming_client = nh.serviceClient<mavros_msgs::CommandBool>
             ("mavros/cmd/arming");
     set_mode_client = nh.serviceClient<mavros_msgs::SetMode>
@@ -103,6 +108,7 @@ void deplanner::planning(){
 	Node* last_goal;
 	std::vector<visualization_msgs::Marker> map_vis_array;
 	bool rotate = true;
+	int count_iteration = 0;
 	ros::Rate rate(10.0);
 
 
@@ -138,6 +144,8 @@ void deplanner::planning(){
 						// ROS_INFO("wait for map");
 						rate.sleep();
 					}
+					cout << "==============================" << count_iteration << "==============================" << endl;
+
 					Node* start;
 					if (first_time){
 						roadmap = new PRM ();
@@ -156,6 +164,9 @@ void deplanner::planning(){
 					map_ready = false;
 					// ++path_idx;
 					path_idx = 0;
+					cout << "==============================" << "END" << "==============================" << endl;
+					++count_iteration;
+					rotate = true;
 				}
 				
 
