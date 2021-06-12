@@ -6,7 +6,7 @@ from nav_msgs.msg import Odometry
 from geometry_msgs.msg import PoseStamped
 
 path = Path()
-
+total_distance = 0
 
 def distance(p1, p2):
 	return ((p1.position.x-p2.position.x)**2 + (p1.position.y-p2.position.y)**2 + (p1.position.z-p2.position.z)**2)**0.5
@@ -23,6 +23,7 @@ def odom_cb(data):
     	distance_to_last = distance(last_pose.pose, pose.pose)
     if (distance_to_last > 0.2 or len(path.poses) == 0):
     	path.poses.append(pose)
+    	total_distance += distance_to_last
 
     # path.poses.append(data.pose.pose)
     del pose
@@ -36,7 +37,8 @@ def main():
 	rate = rospy.Rate(0.1)
 	while not rospy.is_shutdown():
 		path_pub.publish(path)
-		rospy.loginfo(len(path.poses))
+		# rospy.loginfo(len(path.poses))
+		print("Total distance traveled is {.2f}m".format(total_distance))
 	rospy.spin()
 if __name__ == '__main__':
     main()
