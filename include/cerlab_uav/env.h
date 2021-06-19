@@ -1,6 +1,6 @@
 // Environment Limit
 // MAP RESOLUTION:
-double RES = 0.2;
+double RES = 0.1;
 
 // // cafe
 // double env_x_min = -4.5;
@@ -70,12 +70,12 @@ double RES = 0.2;
 // double env_z_min = 0.2;
 // double env_z_max = 2.5;
 
-// double env_x_min = -100;
-// double env_x_max = 100;
-// double env_y_min = -100;
-// double env_y_max = 100;
-// double env_z_min = 0.2;
-// double env_z_max = 2.5;
+double env_x_min = -100;
+double env_x_max = 100;
+double env_y_min = -100;
+double env_y_max = 100;
+double env_z_min = 0.2;
+double env_z_max = 1.5;
 
 // double env_x_min = -2;
 // double env_x_max = 2;
@@ -85,18 +85,18 @@ double RES = 0.2;
 // double env_z_max = 1;
 
 // Define Drone Size:
-double DRONE_X = 0.3;
-double DRONE_Y = 0.3;
+double DRONE_X = 0.2;
+double DRONE_Y = 0.2;
 double DRONE_Z = 0.1;
 
 
-// // conference
-double env_x_min = -5;
-double env_x_max = 5;
-double env_y_min = -5;
-double env_y_max = 5;
-double env_z_min = 0.2;
-double env_z_max = 2.5;
+// // // conference
+// double env_x_min = -5;
+// double env_x_max = 5;
+// double env_y_min = -5;
+// double env_y_max = 5;
+// double env_z_min = 0.2;
+// double env_z_max = 2.5;
 
 
 // // Define Drone Size:
