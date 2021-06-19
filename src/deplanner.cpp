@@ -3,6 +3,8 @@
 #include <mutex>
 #include <visualization_msgs/Marker.h>
 #include <visualization_msgs/MarkerArray.h>
+#include <iostream>
+#include <fstream>
 
 
 
@@ -111,7 +113,8 @@ void deplanner::planning(){
 	int count_iteration = 0;
 	ros::Rate rate(10.0);
 
-
+	std::ofstream waypoint_file;
+	waypoint_file.open("/home/zhefan/Desktop/waypoint_maze.txt");
 
 
 	while (ros::ok()){
@@ -167,6 +170,23 @@ void deplanner::planning(){
 					cout << "==============================" << "END" << "==============================" << endl;
 					++count_iteration;
 					rotate = true;
+
+					// write waypoints:
+					std::string msg = "No. ";
+					msg += std::to_string(count_iteration);
+					msg += "\n";
+					waypoint_file << msg;
+					for (Node* waypoint: path){
+						double waypoint_x = waypoint->p.x();
+						double waypoint_y = waypoint->p.y();
+						double waypoint_z = waypoint->p.z();
+						double waypoint_yaw = waypoint->yaw;
+						if (waypoint_yaw > PI_const){
+							waypoint_yaw = -(2*PI_const - waypoint_yaw);
+						}
+						waypoint_file << std::to_string(waypoint_x) + " " + std::to_string(waypoint_y) + " " +std::to_string(waypoint_z) + " " + std::to_string(waypoint_yaw) + "\n"; 
+					}
+					waypoint_file << "\n";
 				}
 				
 
