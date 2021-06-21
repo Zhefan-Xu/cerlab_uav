@@ -15,6 +15,8 @@ catkin_make
 ```
 
 ## Usage
+NOTE: Please set EKF2_AID_MASK to the approriate value (e.g. 280 for VIO).
+
 #### I.Launch dual camera (D435 and T265)
 ```
 roslaunch cerlab_uav uav_d435_and_t265.launch
