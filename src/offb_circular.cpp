@@ -67,7 +67,7 @@ int main(int argc, char **argv)
 
         pose.pose.position.x = r*sin(theta);
         pose.pose.position.y = r*cos(theta);
-        pose.pose.position.z = 15;
+        pose.pose.position.z = 2;
         count++;
 
         local_pos_pub.publish(pose);

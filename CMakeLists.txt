@@ -12,11 +12,12 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   octomap_ros
   std_msgs
+  trajectory_optimization
 )
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
-
+# find_package(trajectory_optimization)
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
@@ -138,6 +139,7 @@ add_library(deplanner src/deplanner.cpp)
 # add_executable(${PROJECT_NAME}_node src/cerlab_uav_node.cpp)
 add_executable(offboard_node src/offb_node.cpp)
 add_executable(offboard_circular src/offb_circular.cpp)
+add_executable(offboard_trajectory src/offb_trajectory.cpp)
 add_executable(deplanner_node src/deplanner_node.cpp)
 add_executable(transform_broadcast src/tfbc.cpp)
 add_executable(publish_goal src/publish_goal_node.cpp)
@@ -159,6 +161,7 @@ add_executable(publish_goal src/publish_goal_node.cpp)
 # )
 target_link_libraries(offboard_node ${catkin_LIBRARIES})
 target_link_libraries(offboard_circular ${catkin_LIBRARIES})
+target_link_libraries(offboard_trajectory ${catkin_LIBRARIES} mpcPlanner polyTrajGen mapModuleOctomap)
 target_link_libraries(deplanner ${catkin_LIBRARIES})
 target_link_libraries(deplanner_node ${catkin_LIBRARIES} deplanner)
 target_link_libraries(transform_broadcast ${catkin_LIBRARIES})
