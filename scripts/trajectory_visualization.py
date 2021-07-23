@@ -38,7 +38,7 @@ def main():
 	while not rospy.is_shutdown():
 		path_pub.publish(path)
 		# rospy.loginfo(len(path.poses))
-		print("Total distance traveled is {.2f}m".format(total_distance))
+		# print("Total distance traveled is {.2f}m".format(total_distance))
 	rospy.spin()
 if __name__ == '__main__':
     main()
