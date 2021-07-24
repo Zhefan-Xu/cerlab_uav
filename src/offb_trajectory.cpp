@@ -3,6 +3,7 @@
 #include <mavros_msgs/CommandBool.h>
 #include <mavros_msgs/SetMode.h>
 #include <mavros_msgs/State.h>
+#include <mavros_msgs/PositionTarget.h>
 #include <trajectory_optimization/readfile.h>
 #include <trajectory_optimization/mpcPlanner.h>
 #include <trajectory_optimization/staticPlanner.h>
@@ -33,7 +34,7 @@ int main(int argc, char **argv)
     ros::Subscriber odom_sub = nh.subscribe<nav_msgs::Odometry>
             ("mavros/local_position/odom", 10, odom_cb);
     ros::Publisher local_pos_pub = nh.advertise<geometry_msgs::PoseStamped>
-            ("mavros/setpoint_position/local", 10);
+            ("/mavros/setpoint_raw/local", 10);
     // ros::Publisher local_pos_pub = nh.advertise<geometry_msgs::PoseStamped>
     //         ("cerlab_uav/goal", 10);
     ros::ServiceClient arming_client = nh.serviceClient<mavros_msgs::CommandBool>
@@ -51,6 +52,8 @@ int main(int argc, char **argv)
     }
 
     cout << "Connection OK!" << endl;
+
+    mavros_msgs::PositionTarget pose_target;
 
     geometry_msgs::PoseStamped pose_target;
     pose_target.header.frame_id = "map";
@@ -126,6 +129,7 @@ int main(int argc, char **argv)
 
     DVector nextStates;
     DVector currentStates (9); 
+    VariablesGrid xd;
     currentStates(0) = trajectory[0].x; currentStates(1) = trajectory[0].y; currentStates(2) = trajectory[0].z; currentStates(8) = trajectory[0].yaw;
 
     while(ros::ok()){
@@ -158,10 +162,6 @@ int main(int argc, char **argv)
         double current_roll; double current_pitch; double current_yaw; 
         rpy_from_quaternion(quat, current_roll, current_pitch, current_yaw);
 
-       
-        // currentStates(0) = current_x; currentStates(1) = current_y; currentStates(2) = current_z;
-        // currentStates(3) = 0; currentStates(4) = 0; currentStates(5) = 0;
-        // currentStates(6) = current_roll; currentStates(7) = current_pitch; currentStates(8) = current_yaw;
 
         std::vector<pose> mpc_trajectory;
 
@@ -187,7 +187,6 @@ int main(int argc, char **argv)
         if (takeoff == true and reachStart == false){
             // go to the start position
             double delta = 0.1;
-
             double dx = std::abs(pose_target.pose.position.x - current_x);
             double dy = std::abs(pose_target.pose.position.y - current_y);
             double dz = std::abs(pose_target.pose.position.z - current_z);
@@ -198,13 +197,13 @@ int main(int argc, char **argv)
 
         if (takeoff == true and reachStart == true){
             // follow trajectory
-
-
-            mp.optimize(currentStates, nextStates, mpc_trajectory);
-            // currentStates(0) = current_x; currentStates(1) = current_y; currentStates(2) = current_z;
-            currentStates(0) = nextStates(0); currentStates(1) = nextStates(1); currentStates(2) = nextStates(2);
+            mp.optimize(currentStates, nextStates, mpc_trajectory, xd);
+            currentStates(0) = current_x; currentStates(1) = current_y; currentStates(2) = current_z;
+            // currentStates(0) = nextStates(0); currentStates(1) = nextStates(1); currentStates(2) = nextStates(2);
             currentStates(3) = nextStates(3); currentStates(4) = nextStates(4); currentStates(5) = nextStates(5); 
-            currentStates(6) = nextStates(6); currentStates(7) = nextStates(7); currentStates(8) = nextStates(8);  
+            currentStates(6) = nextStates(6); currentStates(7) = nextStates(7); currentStates(8) = nextStates(8); 
+            // currentStates = nextStates;
+            cout << currentStates << endl;
             cout << nextStates << endl;
 
             if (traj_idx <= trajectory.size() - 1){
@@ -212,9 +211,9 @@ int main(int argc, char **argv)
                 // pose_target.pose.position.y = trajectory[traj_idx].y;
                 // pose_target.pose.position.z = trajectory[traj_idx].z;
                 // geometry_msgs::Quaternion target_quat = quaternion_from_rpy(0, 0, trajectory[traj_idx].yaw);
-                pose_target.pose.position.x = mpc_trajectory[1].x;
-                pose_target.pose.position.y = mpc_trajectory[1].y;
-                pose_target.pose.position.z = mpc_trajectory[1].z;
+                pose_target.pose.position.x = nextStates(0);
+                pose_target.pose.position.y = nextStates(1);
+                pose_target.pose.position.z = nextStates(2);
                 geometry_msgs::Quaternion target_quat = quaternion_from_rpy(nextStates(6), nextStates(7), nextStates(8));
                 pose_target.pose.orientation = target_quat;
                 // ++traj_idx;

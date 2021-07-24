@@ -13,6 +13,7 @@ def distance(p1, p2):
 
 def odom_cb(data):
     global path
+    global total_distance
     path.header = data.header
     pose = PoseStamped()
     pose.header = data.header
@@ -32,7 +33,8 @@ def odom_cb(data):
 def main():
 	rospy.init_node('path_node')
 
-	odom_sub = rospy.Subscriber('/t265/odom/sample', Odometry, odom_cb)
+	# odom_sub = rospy.Subscriber('/t265/odom/sample', Odometry, odom_cb)
+	odom_sub = rospy.Subscriber('/mavros/local_position/odom', Odometry, odom_cb)
 	path_pub = rospy.Publisher('/path_sofar', Path, queue_size=0)
 	rate = rospy.Rate(0.1)
 	while not rospy.is_shutdown():
