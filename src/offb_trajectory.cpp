@@ -74,7 +74,7 @@ int main(int argc, char **argv)
 
     std::string filename = "/home/zhefan/catkin_ws/src/trajectory_optimization/path/waypoint_maze_complete.txt";
     std::vector<std::vector<pose>> paths = read_waypoint_file(filename);
-    std::vector<pose> path = paths[38];
+    std::vector<pose> path = paths[30];
 
 
     // parameters
@@ -95,10 +95,10 @@ int main(int argc, char **argv)
     int horizon = 20; // MPC horizon
 
     double mass = 1.0; double k_roll = 1.0; double tau_roll = 1.0; double k_pitch = 1.0; double tau_pitch = 1.0; 
-    double T_max = 3 * 9.8; double roll_max = PI_const/12; double pitch_max = PI_const/12; double yawdot_max = PI_const/3;
+    double T_max = 3 * 9.8; double roll_max = PI_const/6; double pitch_max = PI_const/6;
     mpcPlanner mp (horizon);
     mp.loadParameters(mass, k_roll, tau_roll, k_pitch, tau_pitch);
-    mp.loadControlLimits(T_max, roll_max, pitch_max, yawdot_max);
+    mp.loadControlLimits(T_max, roll_max, pitch_max);
     mp.loadRefTrajectory(trajectory, delT);
 
 
@@ -128,9 +128,9 @@ int main(int argc, char **argv)
     int traj_idx = 1;
 
     DVector nextStates;
-    DVector currentStates (9); 
+    DVector currentStates (8); 
     VariablesGrid xd;
-    currentStates(0) = trajectory[0].x; currentStates(1) = trajectory[0].y; currentStates(2) = trajectory[0].z; currentStates(8) = trajectory[0].yaw;
+    currentStates(0) = trajectory[0].x; currentStates(1) = trajectory[0].y; currentStates(2) = trajectory[0].z;
 
     while(ros::ok()){
         if( current_state.mode != "OFFBOARD" &&
@@ -198,10 +198,11 @@ int main(int argc, char **argv)
         if (takeoff == true and reachStart == true){
             // follow trajectory
             mp.optimize(currentStates, nextStates, mpc_trajectory, xd);
-            // currentStates(0) = current_x; currentStates(1) = current_y; currentStates(2) = current_z;
-            currentStates(0) = nextStates(0); currentStates(1) = nextStates(1); currentStates(2) = nextStates(2);
-            currentStates(3) = nextStates(3); currentStates(4) = nextStates(4); currentStates(5) = nextStates(5); 
-            currentStates(6) = nextStates(6); currentStates(7) = nextStates(7); currentStates(8) = nextStates(8); 
+            currentStates(0) = current_x; currentStates(1) = current_y; currentStates(2) = current_z;
+            // currentStates(0) = nextStates(0); currentStates(1) = nextStates(1); currentStates(2) = nextStates(2);
+            currentStates(3) = current_vx; currentStates(4) = current_vy; currentStates(5) = current_vz;
+            // currentStates(3) = nextStates(3); currentStates(4) = nextStates(4); currentStates(5) = nextStates(5); 
+            currentStates(6) = nextStates(6); currentStates(7) = nextStates(7); 
             // currentStates = nextStates;
             cout << currentStates << endl;
             cout << nextStates << endl;
@@ -215,7 +216,7 @@ int main(int argc, char **argv)
                 pose_target.pose.position.x = mpc_trajectory[forward_idx].x;
                 pose_target.pose.position.y = mpc_trajectory[forward_idx].y;
                 pose_target.pose.position.z = mpc_trajectory[forward_idx].z;
-                geometry_msgs::Quaternion target_quat = quaternion_from_rpy(nextStates(6), nextStates(7), nextStates(8));
+                geometry_msgs::Quaternion target_quat = quaternion_from_rpy(0, 0, mpc_trajectory[forward_idx].yaw);
                 pose_target.pose.orientation = target_quat;
                 // ++traj_idx;
             }

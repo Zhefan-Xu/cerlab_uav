@@ -13,8 +13,8 @@
     <arg name="est" default="ekf2"/>
     <!-- <arg name="vehicle" default="px4vision"/> -->
     <arg name="vehicle" default="iris"/>
-    <arg name="world" default="$(find mavlink_sitl_gazebo)/worlds/empty.world"/>
-    <!-- <arg name="world" default="(find cerlab_uav)/worlds/empty.world"> -->
+    <!-- <arg name="world" default="$(find mavlink_sitl_gazebo)/worlds/empty.world"/> -->
+    <arg name="world" default="$(find cerlab_uav)/worlds/test.world"/>
     <arg name="sdf" default="$(find mavlink_sitl_gazebo)/models/$(arg vehicle)/$(arg vehicle).sdf"/>
 
     <!-- gazebo configs -->
