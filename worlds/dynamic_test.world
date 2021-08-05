@@ -95,7 +95,7 @@
         </visual>
         <self_collide>0</self_collide>
         <kinematic>0</kinematic>
-        <gravity>1</gravity>
+        <gravity>0</gravity>
       </link>
       <pose frame=''>-0.64 -14.5 -0.000109 -3e-05 1.2e-05 3.7e-05</pose>
     </model>
@@ -169,7 +169,7 @@
         </visual>
         <self_collide>0</self_collide>
         <kinematic>0</kinematic>
-        <gravity>1</gravity>
+        <gravity>0</gravity>
       </link>
       <pose frame=''>-5.1 -14.6 1e-06 3e-06 5e-06 -9.3e-05</pose>
     </model>
