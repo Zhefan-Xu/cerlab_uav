@@ -8,7 +8,7 @@ from tf.transformations import euler_from_quaternion, quaternion_from_euler
 import sys
 import ast
 
-linear_velocity = 0.5
+linear_velocity = 0.6
 angular_velocity = 2
 
 waypoints_idx = 0;

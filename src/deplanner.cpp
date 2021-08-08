@@ -122,7 +122,7 @@ void deplanner::planning(){
 		if (new_plan){
 			// ROS_INFO("NEW PLAN");
 			if (not takeoff){
-				goal_pose.pose.position.z = goal_pose.pose.position.z + 0.8;
+				goal_pose.pose.position.z =  0.8;
 				takeoff = true;
 				ROS_INFO("Set Takeoff attitude: 0.8m.");
 			}
@@ -278,7 +278,7 @@ bool deplanner::isReach(){
 	double dyaw = std::abs(goal_yaw - current_node.yaw);
 	// cout << goal_yaw << " " << current_node.yaw << endl;
 	// cout << dx << " " << dy << " " << " " << dz << " "<< dyaw << endl; 
-	if (dx < 0.1 and dy < 0.1 and dz < 0.1 and dyaw < 0.1){
+	if (dx < 0.2 and dy < 0.2 and dz < 0.15 and dyaw < 0.1){
 		return true;
 	}
 	else{
