@@ -68,7 +68,7 @@
         </visual>
         <self_collide>0</self_collide>
         <kinematic>0</kinematic>
-        <gravity>0</gravity>
+        <gravity>1</gravity>
       </link>
       <pose frame=''>8 0.1 0 -3e-05 1.2e-05 3.7e-05</pose>
     </model>
@@ -142,10 +142,13 @@
         </visual>
         <self_collide>0</self_collide>
         <kinematic>0</kinematic>
-        <gravity>0</gravity>
+        <gravity>1</gravity>
       </link>
       <pose frame=''>-1.25 0.1 1e-06 0 0 1.57</pose>
     </model>
+
+
+    
     <light name='sun' type='directional'>
       <cast_shadows>1</cast_shadows>
       <pose frame=''>0 0 10 0 -0 0</pose>
