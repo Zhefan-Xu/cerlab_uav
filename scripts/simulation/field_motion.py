@@ -28,6 +28,13 @@ def callback(all_states):
 			break
 		idx += 1
 
+	# drone_idx = 0
+	# find_drone = False
+	# for name in all_states.name:
+	# 	if (name == "iris"):
+	# 		find_drone = True
+	# 		break
+	# 	drone_idx += 1
 
 	current_pose = all_states.pose[idx]
 	cx, cy, cz, crx, cry, crz, crw = current_pose.position.x, current_pose.position.y, current_pose.position.z,\
@@ -81,8 +88,38 @@ def callback(all_states):
 	# rospy.loginfo("current pose/dyaw: %s, %s, %s, %s, %s", cx, cy, cz, cyaw*180/math.pi, dyaw*180/math.pi)
 	# rospy.loginfo("goal: %s, %s, %s, %s", gx, gy, gyaw, cyaw)
 
-
-	
+	# if (find_drone):
+	# 	drone_x, drone_y = all_states.pose[drone_idx].position.x, all_states.pose[drone_idx].position.y
+	# 	distance_to_drone = math.sqrt((drone_x-cx)**2 + (drone_y-cy)**2)
+	# 	drone_dx_norm = (drone_x-cx)/((drone_x-cx)**2+(drone_y-cy)**2)**0.5
+	# 	drone_dy_norm = (drone_y-cy)/((drone_x-cx)**2+(drone_y-cy)**2)**0.5
+	# 	cos_angle = math.cos(cyaw) * drone_dx_norm + math.sin(cyaw) * drone_dy_norm
+	# 	angle = math.acos(cos_angle)
+	# 	# rospy.loginfo(angle)
+	# 	face_condition = angle < 0 and angle > -math.pi
+	# 	if (distance_to_drone < 1 and cos_angle >0 and first_time_meet==True):
+	# 		target_pose = current_pose
+	# 		target_twist.linear.x = 0
+	# 		target_twist.linear.y = 0
+	# 		target_twist.linear.z = 0
+	# 		target_state.pose = target_pose
+	# 		target_state.twist = target_twist
+	# 		target_state.model_name = target_model_name
+	# 		# while not rospy.is_shutdown():
+	# 		# 	connections = pub.get_num_connections()
+	# 		# 	if (connections > 0):
+	# 		# 		pub.publish(target_state)
+	# 		# 		break
+	# 		# 	rospy.Rate(10).sleep()
+	# 		pub.publish(target_state)
+	# 		waypoints_idx -= 1
+	# 		if (waypoints_idx < 0):
+	# 			waypoints_idx = len(waypoints)-1
+	# 		once_rotation = False
+	# 		once_motion = False
+	# 		first_time_meet = False
+	# 		return
+		
 
 	if (not complete_rotation):
 		# rotate
