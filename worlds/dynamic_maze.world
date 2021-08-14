@@ -1,6 +1,6 @@
 <sdf version='1.6'>
   <world name='default'>
-      <model name='person_walking'>
+    <model name='person_walking'>
       <link name='link'>
         <inertial>
           <pose frame=''>0 0 -0.02 0 -0 0</pose>
@@ -68,7 +68,7 @@
         </visual>
         <self_collide>0</self_collide>
         <kinematic>0</kinematic>
-        <gravity>1</gravity>
+        <gravity>0</gravity>
       </link>
       <pose frame=''>-3 6 0 -3e-05 1.2e-05 1.57</pose>
     </model>
@@ -142,10 +142,13 @@
         </visual>
         <self_collide>0</self_collide>
         <kinematic>0</kinematic>
-        <gravity>1</gravity>
+        <gravity>0</gravity>
       </link>
       <pose frame=''>-4 -0.5 1e-06 0 0 0</pose>
     </model>
+
+
+
 
     <light name='sun' type='directional'>
       <cast_shadows>1</cast_shadows>
