@@ -66,7 +66,7 @@
     <node pkg="cerlab_uav" type="field_motion.py" name="motion1" args="'person_walking' '[(-3, 6), (2, 6)]'" />
 
 
-    <node pkg="cerlab_uav" type="field_motion.py" name="motion2" args="'person_walking_0' '[(-4, -2), (-4, -5.0)]'" />
+    <node pkg="cerlab_uav" type="field_motion.py" name="motion2" args="'person_walking_0' '[(-2, -2), (2, -2)]'" />
 
     <!-- <node pkg="octomap_server" type="octomap_server_node" name="octomap_server"> -->
         <!-- <param name="resolution" value="0.1" /> -->

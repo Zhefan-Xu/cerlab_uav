@@ -11,8 +11,8 @@
     <arg name="Y" default="0"/>
     <!-- vehicle model and world -->
     <arg name="est" default="ekf2"/>
-    <!-- <arg name="vehicle" default="px4vision"/> -->
-    <arg name="vehicle" default="iris"/>
+    <arg name="vehicle" default="px4vision"/>
+    <!-- <arg name="vehicle" default="iris"/> -->
     <!-- <arg name="world" default="$(find mavlink_sitl_gazebo)/worlds/empty.world"/> -->
     <arg name="world" default="$(find cerlab_uav)/worlds/box.world"/>
     <arg name="sdf" default="$(find mavlink_sitl_gazebo)/models/$(arg vehicle)/$(arg vehicle).sdf"/>
@@ -65,17 +65,17 @@
 
 
 
-    <!-- <node pkg="octomap_server" type="octomap_server_node" name="octomap_server"> -->
-        <!-- <param name="resolution" value="0.1" /> -->
+    <node pkg="octomap_server" type="octomap_server_node" name="octomap_server">
+        <param name="resolution" value="0.1" />
         
         <!-- fixed map frame (set to 'map' if SLAM or localization running!) -->
-        <!-- <param name="frame_id" type="string" value="map" /> -->
+        <param name="frame_id" type="string" value="map" />
         
         <!-- maximum range to integrate (speedup!) -->
-        <!-- <param name="sensor_model/max_range" value="5.0" /> -->
+        <param name="sensor_model/max_range" value="5.0" />
         
         <!-- data source to integrate (PointCloud2) -->
-    <!-- <remap from="cloud_in" to="/camera/depth/points" /> -->
+    <remap from="cloud_in" to="/camera/depth/points" />
     
-    <!-- </node> -->
+    </node>
 </launch>
