@@ -72,10 +72,12 @@ double RES = 0.1;
 
 double env_x_min = -100;
 double env_x_max = 100;
-double env_y_min = -100;
+// double env_y_min = -100;
+double env_y_min = -9;
 double env_y_max = 100;
 double env_z_min = 0.2;
-double env_z_max = 1.5;
+// double env_z_max = 1.5;
+double env_z_max = 10;
 
 // double env_x_min = -2;
 // double env_x_max = 2;

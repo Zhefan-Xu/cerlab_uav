@@ -47,7 +47,7 @@ def callback(all_states):
 	# 		cyaw = (2*math.pi + (cyaw-math.pi/2))
 
 	if (waypoints_idx == 0 and first_time):
-		if (target_model_name[0]=="p"):
+		if (target_model_name[0]=="p" or target_model_name[0]=="w"):
 			current_pose.position.x, current_pose.position.y, current_pose.position.z = waypoints[0][0], waypoints[0][1], 0.01
 		else:
 			current_pose.position.x, current_pose.position.y = waypoints[0][0], waypoints[0][1]

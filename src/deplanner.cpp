@@ -122,7 +122,13 @@ void deplanner::planning(){
 		if (new_plan){
 			// ROS_INFO("NEW PLAN");
 			if (not takeoff){
-				goal_pose.pose.position.z =  0.8;
+				
+				if (current_node.p.z() >= 0.8){
+					goal_pose.pose.position.z = current_node.p.z();
+				}
+				else{
+					goal_pose.pose.position.z =  0.8;
+				}
 				takeoff = true;
 				ROS_INFO("Set Takeoff attitude: 0.8m.");
 			}
