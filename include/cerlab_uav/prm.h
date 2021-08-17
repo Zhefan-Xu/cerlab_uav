@@ -368,9 +368,14 @@ PRM* buildRoadMap(OcTree &tree,
 	bool saturate = false;
 	bool region_saturate = false;
 	int count_sample = 0;
-	int sample_thresh = 50;
+	// int sample_thresh = 50;
+	int sample_thresh = 20;
 	double distance_thresh = 0.8;
 	while (not saturate){
+		// if (count_sample >= 500){
+		// 	break;
+		// }
+
 		Node* n;
 		double distance_to_nn = 0;
 		// int r = (int) randomNumber(1,10);
