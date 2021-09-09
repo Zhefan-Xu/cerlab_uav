@@ -67,9 +67,9 @@
 
     <node pkg="cerlab_uav" type="field_motion.py" name="motion2" args="'person_walking_0' '[(-2, 1), (2, 1)]'" />
 
-    <node pkg="cerlab_uav" type="field_motion.py" name="motion3" args="'person_walking_1' '[(-3.2, 10.3), (-5, 7)]'" />
+    <node pkg="cerlab_uav" type="field_motion.py" name="motion3" args="'person_walking_1' '[(-2, 12), (-4, 7)]'" />
 
-    <node pkg="cerlab_uav" type="field_motion.py" name="motion4" args="'person_walking_2' '[(2, 13), (2, 10)]'" />
+    <node pkg="cerlab_uav" type="field_motion.py" name="motion4" args="'person_walking_2' '[(1, 15), (1, 12)]'" />
 
     <node pkg="cerlab_uav" type="field_motion.py" name="motion5" args="'person_walking_3' '[(-1.8, -3.4), (-1.8, -6.1)]'" />
 

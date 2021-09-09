@@ -12,7 +12,7 @@ void callback(const nav_msgs::OdometryConstPtr& odom){
 	tf::Quaternion q (odom->pose.pose.orientation.x, odom->pose.pose.orientation.y, 
 		odom->pose.pose.orientation.z, odom->pose.pose.orientation.w);
 	transform.setRotation(q);
-	br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "odom", "base_link"));
+	br.sendTransform(tf::StampedTransform(transform, odom->header.stamp, "t265_pose_frame", "t265_link"));
 }
 
 
