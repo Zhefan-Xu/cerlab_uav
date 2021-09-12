@@ -8,7 +8,7 @@ from tf.transformations import euler_from_quaternion, quaternion_from_euler
 import sys
 import ast
 
-linear_velocity = 0.6
+linear_velocity = 0.5
 angular_velocity = 2
 
 waypoints_idx = 0;
@@ -19,6 +19,8 @@ once_rotation = False
 once_motion = False
 first_time = True
 first_time_meet = True
+
+rate = 1
 
 def callback(all_states):
 	global waypoints_idx, once_rotation, once_motion, first_time, correct_angle_once, first_time_meet
@@ -139,7 +141,7 @@ def callback(all_states):
 				if (connections > 0):
 					pub.publish(target_state)
 					break
-				rospy.Rate(10).sleep()
+				rospy.Rate(rate).sleep()
 		return 
 
 
@@ -159,7 +161,7 @@ def callback(all_states):
 				if (connections > 0):
 					pub.publish(target_state)
 					break
-				rospy.Rate(10).sleep()
+				rospy.Rate(rate).sleep()
 		return
 	# rospy.loginfo(waypoints_idx)
 	# rospy.loginfo(cyaw)

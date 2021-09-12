@@ -65,13 +65,27 @@
 
     <node pkg="cerlab_uav" type="field_motion.py" name="motion1" args="'person_walking' '[(1.3, -9.5), (1.3, -6.5)]'" />
 
-    <node pkg="cerlab_uav" type="field_motion.py" name="motion2" args="'person_walking_0' '[(-2, 1), (2, 1)]'" />
+    <node pkg="cerlab_uav" type="field_motion.py" name="motion2" args="'person_walking_0' '[(0, 1), (3, 1)]'" />
 
-    <node pkg="cerlab_uav" type="field_motion.py" name="motion3" args="'person_walking_1' '[(-2, 12), (-4, 7)]'" />
+    <node pkg="cerlab_uav" type="field_motion.py" name="motion3" args="'person_walking_1' '[(-0.5, 13), (-3.5, 9)]'" />
 
-    <node pkg="cerlab_uav" type="field_motion.py" name="motion4" args="'person_walking_2' '[(1, 15), (1, 12)]'" />
+    <node pkg="cerlab_uav" type="field_motion.py" name="motion4" args="'person_walking_2' '[(1, 20), (1, 12)]'" />
 
     <node pkg="cerlab_uav" type="field_motion.py" name="motion5" args="'person_walking_3' '[(-1.8, -3.4), (-1.8, -6.1)]'" />
+
+    <node pkg="cerlab_uav" type="field_motion.py" name="motion6" args="'person_walking_4' '[(2.68, -4.5), (5.0, -0.55), (3.0, 4.25),(5.0, -0.55)]'" />
+
+    <node pkg="cerlab_uav" type="field_motion.py" name="motion7" args="'person_walking_5' '[(3.15, 9.35), (1.55, 6.00), (-3.25, 4.55), (-5.25, 8.75), (-1.85, 8.00), (1.55, 6.00)]'" />
+
+    <node pkg="cerlab_uav" type="field_motion.py" name="motion8" args="'person_walking_6' '[(-3.75, 2.45), (-6.25, -1.00), (-7.00, -5.25), (-6.25, -9.50), (-3.25, -11.00), (-6.25, -9.50), (-7.00, -5.25), (-6.25, -1.00)]'" />
+
+    <node pkg="cerlab_uav" type="field_motion.py" name="motion9" args="'person_walking_7' '[(-3.9, 12.0), (-7.00, 10.00), (-6.50, 5.25), (-2.60, 2.55), (-6.50, 5.25), (-7.00, 10.00)]'" />
+
+    <node pkg="cerlab_uav" type="field_motion.py" name="motion10" args="'person_walking_8' '[(1.55, -10.8), (-2.30, -11.90), (-0.55, -14.05), (-5.15, -13.20)]'" />
+
+    <node pkg="cerlab_uav" type="field_motion.py" name="motion11" args="'warehouse_robot' '[(2.35, 14.25), (4.25, 10.60)]'" />
+
+    <node pkg="cerlab_uav" type="field_motion.py" name="motion12" args="'warehouse_robot_0' '[(0, 2), (3, 2)]'" />
 
     <!-- <node pkg="octomap_server" type="octomap_server_node" name="octomap_server"> -->
         <!-- <param name="resolution" value="0.1" /> -->
