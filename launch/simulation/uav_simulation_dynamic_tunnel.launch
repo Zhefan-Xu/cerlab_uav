@@ -70,6 +70,18 @@
 
     <node pkg="cerlab_uav" type="field_motion.py" name="motion3" args="'warehouse_robot_0' '[(2, -3.4), (-3, -3.4)]'" />
 
+    <node pkg="cerlab_uav" type="field_motion.py" name="motion4" args="'person_walking_0' '[(1.75, -1.45), (3.90, -1.10), (3.70, 3.30), (3.90, -1.10)]'" />
+
+    <node pkg="cerlab_uav" type="field_motion.py" name="motion5" args="'warehouse_robot_1' '[(4.00, -7.75), (4.00, -4.10)]'" />
+
+    <node pkg="cerlab_uav" type="field_motion.py" name="motion6" args="'person_walking_1' '[(1.60, 9.10), (1.45, 5.45), (-2.60, 6.00), (-3.00, 9.90), (-2.60, 6.00), (1.45, 5.45)]'" />
+
+    <node pkg="cerlab_uav" type="field_motion.py" name="motion7" args="'warehouse_robot_2' '[(3.70, 5.45), (3.75, 9.40)]'" />
+
+    <node pkg="cerlab_uav" type="field_motion.py" name="motion8" args="'warehouse_robot_3' '[(-3.30, -1.40), (-0.50, -1.60)]'" />
+
+    <node pkg="cerlab_uav" type="field_motion.py" name="motion9" args="'person_walking_2' '[(-1.80, -8.95), (-4.30, -8.85), (-4.45, -2.85), (-4.30, -8.85)]'" />
+
     <!-- <node pkg="octomap_server" type="octomap_server_node" name="octomap_server"> -->
         <!-- <param name="resolution" value="0.1" /> -->
         

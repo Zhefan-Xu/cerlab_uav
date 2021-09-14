@@ -65,10 +65,30 @@
 
     <node pkg="cerlab_uav" type="field_motion.py" name="motion1" args="'person_walking' '[(-3, 6), (2, 6)]'" />
 
-    <node pkg="cerlab_uav" type="field_motion.py" name="motion2" args="'person_walking_1' '[(4, 6), (4, 2)]'" />
+    <node pkg="cerlab_uav" type="field_motion.py" name="motion2" args="'person_walking_0' '[(-2, -2), (2, -2)]'" />
 
+    <node pkg="cerlab_uav" type="field_motion.py" name="motion3" args="'person_walking_1' '[(4, 6), (4, 2)]'" />
 
-    <node pkg="cerlab_uav" type="field_motion.py" name="motion3" args="'person_walking_0' '[(-2, -2), (2, -2)]'" />
+    <node pkg="cerlab_uav" type="field_motion.py" name="motion4" args="'person_walking_2' '[(-0.5, 12.15), (-1.50, 12.15), (-3.15, 8.60), (-6.75, 8.35), (-6.85, 12.45), (-1.50, 12.15)]'" />
+
+    <node pkg="cerlab_uav" type="field_motion.py" name="motion5" args="'person_walking_3' '[(-3.00, 7.45), (2.65, 8.25), (2.35, 4.30), (2.65, 8.25)]'" />
+
+    <node pkg="cerlab_uav" type="field_motion.py" name="motion6" args="'person_walking_4' '[(3.80, 15.20), (3.80, 11.30), (0.15, 11.10)]'" />
+
+    <node pkg="cerlab_uav" type="field_motion.py" name="motion7" args="'person_walking_5' '[(-3.25, -2.40), (-5.10, -4.70)]'" />
+
+    <node pkg="cerlab_uav" type="field_motion.py" name="motion8" args="'person_walking_6' '[(-0.08, 3.65), (-6.37, 3.65), (-6.70, 6.90), (-6.37, 3.65)]'" />
+
+    <node pkg="cerlab_uav" type="field_motion.py" name="motion9" args="'warehouse_robot' '[(0.01, 4.75), (-4.85, 4.85), (-4.80, 6.95), (-4.85, 4.85)]'" />
+
+    <!-- <node pkg="cerlab_uav" type="field_motion.py" name="motion10" args="'warehouse_robot_0' '[(4.65, 15.30), (1.50, 15.35)]'" /> -->
+
+    <!-- <node pkg="cerlab_uav" type="field_motion.py" name="motion11" args="'warehouse_robot_1' '[(-1.65, 15.60), (-1.65, 14.30), (1.85, -8.35)]'" /> -->
+
+    <node pkg="cerlab_uav" type="field_motion.py" name="motion12" args="'warehouse_robot_2' '[(5.90, -4.15), (5.90, -8.45), (1.20, -8.40), (1.80, -4.40)]'" />
+
+    <node pkg="cerlab_uav" type="field_motion.py" name="motion13" args="'warehouse_robot_3' '[(-3.20, -0.80), (-6.20, -0.78)]'" />
+
 
     <!-- <node pkg="octomap_server" type="octomap_server_node" name="octomap_server"> -->
         <!-- <param name="resolution" value="0.1" /> -->
