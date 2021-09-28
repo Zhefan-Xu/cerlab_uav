@@ -30,6 +30,8 @@ roslaunch mavros px4.launch
 By far, you can enter [position mode](https://docs.px4.io/v1.11/en/flight_modes/position_mc.html) and control by transmitter to fly stably.
 
 
+#### TODO: failsafe localization filter
+
 The followings are for the autonomous flight usage:
 #### III. Autonomous Takeoff (Take off and keep 0.5m height)
 ```
