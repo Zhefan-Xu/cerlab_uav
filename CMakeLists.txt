@@ -12,7 +12,6 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   octomap_ros
   std_msgs
-  trajectory_optimization
 )
 
 ## System dependencies are found with CMake's conventions
