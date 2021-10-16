@@ -1,3 +1,4 @@
+#! /usr/bin/env python
 import rospy
 import os
 from nav_msgs.msg import Odometry
@@ -8,14 +9,14 @@ from mavros_msgs.srv import SetMode
 from collections import deque
 import math
 
-node_to_kill = offboard_node
+node_to_kill = "offboard_node"
 
-bbx_xmin = 0
-bbx_xmax = 100
-bbx_ymin = 0
-bbx_ymax = 100
-bbx_zmin = 0
-bbx_zmax = 100
+bbx_xmin = -10
+bbx_xmax = 10
+bbx_ymin = -10
+bbx_ymax = 10
+bbx_zmin = -0.5
+bbx_zmax = 3
 dist_thres = 20
 drift_thres = 20
 
@@ -42,12 +43,11 @@ class OdomFilter:
         self.pose_mavros = pose.pose.position
         if self.filterPassed():
             self.pub_mavros.publish(self.odom_t265)
-            if len(self.queue > 2):
+            if len(self.queue) >= 2:
                 self.queue.popleft()
             self.queue.append(self.pose_t265)
         else:
             self.switch2LandMode()
-
 
     def filterPassed(self):
         if not self.pose_t265:
@@ -60,18 +60,19 @@ class OdomFilter:
             return False
 
         # filter 2: t265 != mavros
-        if not self.pose_mavros or math.dist(self.pose_t265 - self.pose_mavros) > dist_thres:
+        if not self.pose_mavros or self.dist(self.pose_t265, self.pose_mavros) > dist_thres:
             rospy.logerr("T265 returned invalid value -- does not match with /mavros/local_position/pose")
             return False
             
         # filter 3: x_t+1 - x_t
-        if not self.queue.empty() and math.dist(self.queue[0] - self.queue[-1]) > drift_thes:
-            rospy.logerr("T265 returned invalid value -- drifts too much from previous position")
-            return False
+        if len(self.queue) >= 1: 
+            if self.dist(self.queue[0], self.queue[-1]) > drift_thres:
+                rospy.logerr("T265 returned invalid value -- drifts too much from previous position")
+                return False
         
         return True
 
-    def switch2LandMode():
+    def switch2LandMode(self):
         rospy.wait_for_service("mavros/set_mode")
         try:
             flightModeService = rospy.ServiceProxy("mavros/set_mode", SetMode)
@@ -79,7 +80,16 @@ class OdomFilter:
             flightModeService(custom_mode="AUTO.LAND")
         except rospy.ServiceException as e:
             print("service set_mode call failed: %s. Autoland Mode could not be set." % e)
+    
+    def dist(self, pos1, pos2):
+        x1 = pos1.x
+        y1 = pos1.y
+        z1 = pos1.z
 
+        x2 = pos2.x
+        y2 = pos2.y
+        z2 = pos2.z
+        return ((x1-x2)**2 + (y1-y2)**2 + (z1-z2)**2)**0.5
         
 	
 if __name__ == "__main__":

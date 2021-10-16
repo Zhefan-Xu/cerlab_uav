@@ -52,7 +52,7 @@
         <arg name="clip_distance"         value="$(arg clip_distance)"/>
       </include>
     </group>
-    <node pkg="tf" type="static_transform_publisher" name="t265_to_l515" args="0 0 0 0 0 0 /$(arg tf_prefix_camera1)_link /$(arg tf_prefix_camera2)_link 100"/>
+    <node pkg="tf" type="static_transform_publisher" name="t265_to_l515" args="0 0 0.050 0 0 0 /$(arg tf_prefix_camera1)_link /$(arg tf_prefix_camera2)_link 1000"/>
 
 
 	<!-- Send Odometry -->
@@ -63,30 +63,11 @@
         	args="0 0 0 0 0 0 map odom 1000"/>
 
   <node pkg="tf" type="static_transform_publisher" name="odom_cameraOdom"
-    	args="0 0 0 0 0 0 odom t265_odom_frame 1000"/>
+    	args="0.06 0 0.035 0 0 0 odom t265_odom_frame 1000"/>
 
   <node pkg="tf" type="static_transform_publisher" name="cameraPose_baseLink"
-    	args="0 0 0 0 0 0 t265_pose_frame base_link 1000"/>
+    	args="-0.06 0 -0.035 0 0 0 t265_pose_frame base_link 1000"/>
 
 
-  <arg name="fcu_url" default="/dev/ttyS0:115200" /> <!-- please modify this for your vehicle UART connection -->
-  <arg name="gcs_url" default="" />
-  <arg name="tgt_system" default="1" />
-  <arg name="tgt_component" default="1" />
-  <arg name="log_output" default="screen" />
-  <arg name="fcu_protocol" default="v2.0" />
-  <arg name="respawn_mavros" default="false" />
-
-  <include file="$(find mavros)/launch/node.launch">
-    <arg name="pluginlists_yaml" value="$(find mavros)/launch/px4_pluginlists.yaml" />
-    <arg name="config_yaml" value="$(find mavros)/launch/px4_config.yaml" />
-
-    <arg name="fcu_url" value="$(arg fcu_url)" />
-    <arg name="gcs_url" value="$(arg gcs_url)" />
-    <arg name="tgt_system" value="$(arg tgt_system)" />
-    <arg name="tgt_component" value="$(arg tgt_component)" />
-    <arg name="log_output" value="$(arg log_output)" />
-    <arg name="fcu_protocol" value="$(arg fcu_protocol)" />
-    <arg name="respawn_mavros" default="$(arg respawn_mavros)" />
-  </include>
+  <include file="$(find mavros)/launch/px4.launch"/>
  </launch>
