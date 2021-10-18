@@ -136,7 +136,10 @@ add_library(deplanner src/deplanner.cpp)
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 # add_executable(${PROJECT_NAME}_node src/cerlab_uav_node.cpp)
-add_executable(offboard_node src/offb_node.cpp)
+add_executable(offboard_node_05 src/offb_node_05.cpp)
+add_executable(offboard_node_10 src/offb_node_10.cpp)
+add_executable(offboard_node_15 src/offb_node_15.cpp)
+
 add_executable(offboard_circular src/offb_circular.cpp)
 add_executable(deplanner_node src/deplanner_node.cpp)
 add_executable(transform_broadcast src/tfbc.cpp)
@@ -159,7 +162,9 @@ add_executable(publish_goal src/publish_goal_node.cpp)
 # target_link_libraries(${PROJECT_NAME}_node
 #   ${catkin_LIBRARIES}
 # )
-target_link_libraries(offboard_node ${catkin_LIBRARIES})
+target_link_libraries(offboard_node_05 ${catkin_LIBRARIES})
+target_link_libraries(offboard_node_10 ${catkin_LIBRARIES})
+target_link_libraries(offboard_node_15 ${catkin_LIBRARIES})
 target_link_libraries(offboard_circular ${catkin_LIBRARIES})
 target_link_libraries(deplanner ${catkin_LIBRARIES})
 target_link_libraries(deplanner_node ${catkin_LIBRARIES} deplanner)
