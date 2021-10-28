@@ -18,7 +18,7 @@ bbx_ymax = 4
 bbx_zmin = -0.5
 bbx_zmax = 2.0
 dist_thres = 0.4
-vel_thres = 1.5
+vel_thres = 5.0
 time_diff = 0.5
 
 
@@ -51,12 +51,12 @@ class OdomFilter:
     def callback_mavros(self, pose):
         self.pose_mavros = pose.pose.position
         if self.filterPassed():
-            self.pub_mavros.publish(self.odom_t265)
             if len(self.queue) >= 2:
                 self.queue.popleft()
             self.queue.append(self.vel_t265)
         else:
             self.switch2LandMode()
+        self.pub_mavros.publish(self.odom_t265)
 
     def filterPassed(self):
         self.current_time = rospy.get_time()
@@ -88,10 +88,16 @@ class OdomFilter:
         rospy.wait_for_service("mavros/set_mode")
         try:
             flightModeService = rospy.ServiceProxy("mavros/set_mode", SetMode)
-            os.system("rosnode kill " + node_to_kill)
+            try:
+                os.system("rosnode kill " + node_to_kill)
+            except:
+                rospy.logwarn("No node to kill")
             flightModeService(custom_mode="AUTO.LAND")
+            rospy.logwarn("Enter auto land mode")
+
+
         except rospy.ServiceException as e:
-            print("service set_mode call failed: %s. Autoland Mode could not be set." % e)
+            rospy.warn("service set_mode call failed: %s. Autoland Mode could not be set." % e)
     
     def norm(self, vel):
         vx = vel.x

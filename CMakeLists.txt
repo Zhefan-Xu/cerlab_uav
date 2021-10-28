@@ -143,7 +143,7 @@ add_executable(offboard_node_15 src/offb_node_15.cpp)
 add_executable(offboard_circular src/offb_circular.cpp)
 add_executable(deplanner_node src/deplanner_node.cpp)
 add_executable(transform_broadcast src/tfbc.cpp)
-add_executable(transform_broadcast_temp src/tfbc_temp.cpp)
+# add_executable(transform_broadcast_temp src/tfbc_temp.cpp)
 
 add_executable(publish_goal src/publish_goal_node.cpp)
 
@@ -169,7 +169,7 @@ target_link_libraries(offboard_circular ${catkin_LIBRARIES})
 target_link_libraries(deplanner ${catkin_LIBRARIES})
 target_link_libraries(deplanner_node ${catkin_LIBRARIES} deplanner)
 target_link_libraries(transform_broadcast ${catkin_LIBRARIES})
-target_link_libraries(transform_broadcast_temp ${catkin_LIBRARIES})
+# target_link_libraries(transform_broadcast_temp ${catkin_LIBRARIES})
 
 target_link_libraries(publish_goal ${catkin_LIBRARIES})
 
