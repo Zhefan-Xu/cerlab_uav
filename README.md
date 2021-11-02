@@ -55,4 +55,3 @@ To launch simulation (you can change parameters and arguments in the file),
 roslaunch cerlab_uav uav_simulation
 ```
 
-TODO: add social force dynamic models 
