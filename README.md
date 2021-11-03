@@ -30,9 +30,6 @@ roslaunch mavros px4.launch
 By far, you can enter [position mode](https://docs.px4.io/v1.11/en/flight_modes/position_mc.html) and control by transmitter to fly stably.
 
 
-#### TODO: failsafe localization filter
-Localization filter will let the drone land if camera is not working as expected.
-(TODO: write the logic of failsafe filter)
 
 
 
