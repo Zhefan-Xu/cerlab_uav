@@ -10,7 +10,7 @@
         	args="0 0 0 0 0 0 map odom 1000"/>
 
   <node pkg="tf" type="static_transform_publisher" name="odom_cameraOdom"
-    	args="0.10 0 -0.04 0 0 0 odom t265_odom_frame 1000"/>
+    	args="0.13 0 -0.04 0 0 0 odom t265_odom_frame 1000"/>
 
   <!-- camera_pose is from t265 -->
   <node pkg="tf" type="static_transform_publisher" name="cameraPose_baseLink"

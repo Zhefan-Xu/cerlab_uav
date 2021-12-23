@@ -1,6 +1,9 @@
  <launch>  
     <rosparam>
-      /t265/tracking_module/frames_queue_size: 16
+      /t265/tracking_module/frames_queue_size: 0
+      /l515/motion_module/global_time_enabled: true
+      /l515/l500_depth_sensor/global_time_enabled: true
+      /l515/rgb_camera/global_time_enabled: true 
     </rosparam>
 
     <arg name="device_type_camera1"    		default="t265"/>
@@ -50,5 +53,5 @@
         <arg name="clip_distance"         value="$(arg clip_distance)"/>
       </include>
     </group>
-    <node pkg="tf" type="static_transform_publisher" name="t265_to_l515" args="-0.049 0 0.049 0 -0.7854 0 /$(arg tf_prefix_camera1)_link /$(arg tf_prefix_camera2)_link 1000"/>
+    <node pkg="tf" type="static_transform_publisher" name="t265_to_l515" args="-0.06098 0 0.04562 0 -0.545 0 /$(arg tf_prefix_camera1)_link /$(arg tf_prefix_camera2)_link 1000"/>
  </launch>
