@@ -1,10 +1,35 @@
  <launch>
-  	<node pkg="tf" type="static_transform_publisher" name="map_odom"
-        	args="0 0 0 0 0 0 map odom 1000"/>
+      <node pkg="tf" type="static_transform_publisher" name="t265_pose_link"
+            args="0 0 0 0 0 0 t265_pose_frame t265_link 1000"/>
 
-     <node pkg="tf" type="static_transform_publisher" name="odom_cameraOdom"
-    	args="0 0 0 0 0 0 odom camera_odom_frame 1000"/>
+      <node pkg="tf" type="static_transform_publisher" name="map_map_ned"
+            args="0 0 0 3.14 0 1.57 map map_ned 1000"/>
 
-   	 <node pkg="tf" type="static_transform_publisher" name="cameraPose_baseLink"
-    	args="0 0 0 0 0 0 camera_pose_frame base_link 1000"/>
+      <node pkg="tf" type="static_transform_publisher" name="odom_odom_ned"
+            args="0 0 0 3.14 0 1.57 odom odom_ned 1000"/>
+
+      <node pkg="tf" type="static_transform_publisher" name="base_link_baselink_frd"
+            args="0 0 0 3.14 0 0 base_link base_link_frd 1000"/>
+
+      <node pkg="tf" type="static_transform_publisher" name="l515_l515_depth_frame"
+            args="0 0 0 0 0 0 l515_link l515_depth_frame 1000"/>
+
+      <node pkg="tf" type="static_transform_publisher" name="l515_depth_frame_l515_depth_optical_frame"
+            args="0 0 0 -1.57 0 -1.57 l515_depth_frame l515_depth_optical_frame 1000"/>
+
+
+      <node pkg="tf" type="static_transform_publisher" name="l515_l515_color_frame"
+            args="0 0 0 0 -0.031 0 l515_link l515_color_frame 1000"/>
+
+      <node pkg="tf" type="static_transform_publisher" name="l515_aligned_depth_to_color_l515_color_optical_frame"
+            args="0 0 0 -1.57 0 -1.57 l515_aligned_depth_to_color_frame l515_color_optical_frame 1000"/>
+
+      <node pkg="tf" type="static_transform_publisher" name="l515_l515_aligned_depth_to_color_frame"
+            args="0 0 0 0 -0.031 0 l515_link l515_aligned_depth_to_color_frame 1000"/>
+
+      <node pkg="tf" type="static_transform_publisher" name="l515_camera_confidence_frame"
+            args="0 0 0 0 0 0 l515_link camera_confidence_frame 1000"/>
+            
+      <node pkg="tf" type="static_transform_publisher" name="camera_confidence_frame_camera_confidence_optical_frame"
+            args="0 0 0 -1.57  0 -1.57 camera_confidence_frame camera_confidence_optical_frame 1000"/>
  </launch>

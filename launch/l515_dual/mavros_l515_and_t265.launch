@@ -1,5 +1,5 @@
  <launch>  
-  <include file="$(find cerlab_uav)/launch/l515_and_t265.launch"/>
+  <include file="$(find cerlab_uav)/launch/l515_dual/l515_and_t265.launch"/>
 
 
 	<!-- Send Odometry -->
@@ -15,7 +15,11 @@
   <!-- camera_pose is from t265 -->
   <node pkg="tf" type="static_transform_publisher" name="cameraPose_baseLink"
     	args="-0.10 0 -0.03 0 0 0 l515_link base_link 1000"/>
+  
+  <!-- <include file="$(find cerlab_uav)/launch/tf/tf_broadcaster.launch"/> -->
 
+  <node pkg="cerlab_uav" type="static_transform_mux" name="mux" />
+  <node pkg="cerlab_uav" type="remap_vis_pose.py" name="vis_pose" />
 
   <include file="$(find mavros)/launch/px4.launch"/>
  </launch>

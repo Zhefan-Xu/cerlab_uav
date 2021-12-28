@@ -11,11 +11,11 @@ def callback(odom):
 	odom_send.child_frame_id = "base_link"
 	odom_pub.publish(odom_send)
 
-	# br = tf.TransformBroadcaster()
-	# position = odom.pose.pose.position
+	#br = tf.TransformBroadcaster()
+	#position = odom.pose.pose.position
 
-	# orientation = odom.pose.pose.orientation
-	# br.sendTransform((position.x, position.y,position.z), (orientation.x, orientation.y, orientation.z, orientation.w), rospy.Time.now(), "base_link", "odom")
+	#orientation = odom.pose.pose.orientation
+	#br.sendTransform((position.x, position.y,position.z), (orientation.x, orientation.y, orientation.z, orientation.w), rospy.Time.now(), "base_link", "odom")
 
 def main():
 	rospy.init_node('t265_vio_sender', anonymous=False)

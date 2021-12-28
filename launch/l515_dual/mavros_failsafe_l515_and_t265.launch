@@ -1,10 +1,13 @@
  <launch>  
-  <include file="$(find cerlab_uav)/launch/l515_and_t265.launch"/>
+  <include file="$(find cerlab_uav)/launch/l515_dual/l515_and_t265.launch"/>
 
   <!-- Send Odometry -->
   <node pkg="cerlab_uav" type="pub_odom_filter.py" name="send_vio" />
 
   <!-- <CONFIGURE TF> -->
+  <node pkg="tf" type="static_transform_publisher" name="map_odom"
+          args="0 0 0 0 0 0 map odom 1000"/>
+
   <node pkg="tf" type="static_transform_publisher" name="map_odom"
           args="0 0 0 0 0 0 map odom 1000"/>
 
